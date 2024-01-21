@@ -1,6 +1,6 @@
 Feature: LMSILS-44824-V2
 
-  Background: logIn
+  Background: LogIn
     Given User login as "QAAutomation1!" and "QAAutomation1!"
 
   Scenario:

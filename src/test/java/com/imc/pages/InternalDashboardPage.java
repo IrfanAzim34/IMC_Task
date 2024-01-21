@@ -1,5 +1,6 @@
 package com.imc.pages;
 
+import com.imc.utils.BrowserUtils;
 import com.imc.utils.Driver;
 import org.junit.Assert;
 import org.openqa.selenium.WebElement;
@@ -15,8 +16,9 @@ public class InternalDashboardPage {
     }
 
     public void verifyPageLoaded() {
+        BrowserUtils.waitForElementVisible(this.allContents);
         Assert.assertTrue(this.userProfileBtn.isDisplayed());
-        Assert.assertTrue(this.allContents.isDisplayed());
+//        Assert.assertTrue(this.allContents.isDisplayed());
     }
 
     public void logOut() {

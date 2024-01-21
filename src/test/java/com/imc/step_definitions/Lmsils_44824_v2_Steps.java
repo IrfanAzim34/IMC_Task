@@ -13,9 +13,6 @@ import org.junit.Assert;
 import org.openqa.selenium.WebElement;
 
 public class Lmsils_44824_v2_Steps {
-
-    public static String originalWindow = Driver.getDriver().getWindowHandle();
-
     InternalDashboardPage internalDashboard = new InternalDashboardPage();
     ClientsPage clientsPage = new ClientsPage();
     EditPage editPage = new EditPage();
@@ -51,6 +48,7 @@ public class Lmsils_44824_v2_Steps {
 //        new WebDriverWait(Driver.getDriver(), 10)
 //                .until(ExpectedConditions.numberOfWindowsToBe(2));
         BrowserUtils.waitUntilAllWindowsOpen(2);
+        String originalWindow = Driver.getDriver().getWindowHandle();
 
         for (String windowHandle : Driver.getDriver().getWindowHandles()) {
             if (!windowHandle.contentEquals(originalWindow)) {
@@ -104,6 +102,7 @@ public class Lmsils_44824_v2_Steps {
 //        new WebDriverWait(Driver.getDriver(), 10)
 //                .until(ExpectedConditions.numberOfWindowsToBe(2));
         BrowserUtils.waitUntilAllWindowsOpen(2);
+        String originalWindow = Driver.getDriver().getWindowHandle();
 
         for (String windowHandle : Driver.getDriver().getWindowHandles()) {
             if (!windowHandle.contentEquals(originalWindow)) {
@@ -124,6 +123,7 @@ public class Lmsils_44824_v2_Steps {
         // TODO because it was not default unchecked status so If I execute these two line and save it
         //  it will occur potential issue in previous tests, leave it like this until fixed it
 
+        Driver.getDriver().close();
         Driver.getDriver().switchTo().window(originalWindow);
         clientsPage.logOut();
     }

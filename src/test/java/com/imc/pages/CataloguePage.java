@@ -39,7 +39,6 @@ public class CataloguePage extends InternalDashboardPage {
     @FindBy(xpath = "//button[@class='imc-filter-summary-bar__item']")
     public WebElement filterPreSet;
 
-    //    @FindBy(xpath = "//one-column-list-item/div")
     @FindBy(xpath = "//one-column-list-item//a/div[2]/div/div[1]")
     public List<WebElement> searchResults;
 
