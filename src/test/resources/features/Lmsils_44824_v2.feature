@@ -18,3 +18,4 @@ Feature: LMSILS-44824-V2
     And User activate Warning of time conflicts checkbox
     And User login as "warninguser1" and "warninguser1"
     And User search "#warntiming" in catalogue page
+    And User enrol "TD #Course #WarnTiming #LongAvailability" course

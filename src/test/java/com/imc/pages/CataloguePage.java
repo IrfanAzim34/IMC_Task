@@ -53,4 +53,13 @@ public class CataloguePage extends InternalDashboardPage {
 
     @FindBy(xpath = "//button[@id='startSearchBtn']")
     public WebElement searchBtn;
+
+    @FindBy(xpath = "//button[@title='Enrol']")
+    public WebElement courseEnrolBtn;
+
+    @FindBy(xpath = "//div[@class='small reveal dialog-default']")
+    public WebElement enrolPopUpDialog;
+
+    @FindBy(xpath = "//button[@title='Cancel']")
+    public WebElement enrolCancelBtn;
 }

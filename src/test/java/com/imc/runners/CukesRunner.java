@@ -14,7 +14,7 @@ import org.junit.runner.RunWith;
         },
         features = "src/test/resources/features",
         glue = "com/imc/step_definitions",
-        tags = "",
+        tags = "@wip",
         dryRun = false
 )
 public class CukesRunner {

@@ -18,7 +18,6 @@ public class InternalDashboardPage {
     public void verifyPageLoaded() {
         BrowserUtils.waitForElementVisible(this.allContents);
         Assert.assertTrue(this.userProfileBtn.isDisplayed());
-//        Assert.assertTrue(this.allContents.isDisplayed());
     }
 
     public void logOut() {

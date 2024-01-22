@@ -45,8 +45,6 @@ public class Lmsils_44824_v2_Steps {
 
     @And("User verify Warning of time conflicts is unchecked")
     public void userVerifyWarningOfTimeConflictsIsUnchecked() {
-//        new WebDriverWait(Driver.getDriver(), 10)
-//                .until(ExpectedConditions.numberOfWindowsToBe(2));
         BrowserUtils.waitUntilAllWindowsOpen(2);
         String originalWindow = Driver.getDriver().getWindowHandle();
 
@@ -63,9 +61,7 @@ public class Lmsils_44824_v2_Steps {
         editPage.settingsBtn.click();
 
         BrowserUtils.scrollDownToElement(editPage.warningOfTimeCheckbox);
-//        Assert.assertFalse(editPage.warningOfTimeCheckbox.getAttribute("class").endsWith("checked"));
-        //TODO -There is a bug, it shouldn't be checked, default is Unchecked status
-        // just comment it until fixed it
+        Assert.assertFalse(editPage.warningOfTimeCheckbox.getAttribute("class").endsWith("checked"));
 
         Driver.getDriver().close();
         Driver.getDriver().switchTo().window(originalWindow);
@@ -91,40 +87,64 @@ public class Lmsils_44824_v2_Steps {
             }
         }
 
-        //TODO -Because of this course was already canceled so we can not enrol this course no longer
-        // This is might be a impediment but not a bug, skip this part for now
+        cataloguePage.courseEnrolBtn.click();
+        BrowserUtils.waitForElementVisible(cataloguePage.enrolPopUpDialog);
+        cataloguePage.enrolCancelBtn.click();
 
         cataloguePage.logOut();
     }
 
     @And("User activate Warning of time conflicts checkbox")
     public void userActivateWarningOfTimeConflictsCheckbox() {
-//        new WebDriverWait(Driver.getDriver(), 10)
-//                .until(ExpectedConditions.numberOfWindowsToBe(2));
-        BrowserUtils.waitUntilAllWindowsOpen(2);
         String originalWindow = Driver.getDriver().getWindowHandle();
+        for (int i = 0; i < 2; i++) {
+            BrowserUtils.waitUntilAllWindowsOpen(2);
+            for (String windowHandle : Driver.getDriver().getWindowHandles()) {
+                if (!windowHandle.contentEquals(originalWindow)) {
+                    Driver.getDriver().switchTo().window(windowHandle);
+                    break;
+                }
+            }
+            BrowserUtils.switchInFrame(editPage.contentFrame);
+            BrowserUtils.switchInFrame(editPage.subframeOfContentFrame);
 
-        for (String windowHandle : Driver.getDriver().getWindowHandles()) {
-            if (!windowHandle.contentEquals(originalWindow)) {
-                Driver.getDriver().switchTo().window(windowHandle);
+            editPage.settingsBtn.click();
+
+            BrowserUtils.scrollDownToElement(editPage.warningOfTimeCheckbox);
+            if(i == 0){
+                editPage.warningOfTimeCheckbox.click();
+                editPage.saveAndCloseBtn.click();
+
+                Driver.getDriver().switchTo().window(originalWindow);
+                BrowserUtils.switchInFrame(clientsPage.contentFrame);
+                BrowserUtils.switchInFrame(clientsPage.subframeOfContentFrame);
+                clientsPage.globalEdit();
+            }else {
+                Assert.assertTrue(editPage.warningOfTimeCheckbox.getAttribute("class").endsWith("checked"));
+                editPage.warningOfTimeCheckbox.click();
+                editPage.saveAndCloseBtn.click();
+            }
+        }
+
+        Driver.getDriver().switchTo().window(originalWindow);
+        clientsPage.logOut();
+    }
+
+    @And("User enrol {string} course")
+    public void userEnrolCourse(String contentName) {
+        for (WebElement result : cataloguePage.searchResults) {
+            if (result.getText().equals(contentName)) {
+                result.click();
                 break;
             }
         }
 
-        BrowserUtils.switchInFrame(editPage.contentFrame);
-        BrowserUtils.switchInFrame(editPage.subframeOfContentFrame);
+        cataloguePage.courseEnrolBtn.click();
+        BrowserUtils.waitForElementVisible(cataloguePage.enrolPopUpDialog);
+        String expectedMessage = "Course enrolment\nYou enrol for the course TD #Course #WarnTiming #LongAvailability. In this time frame you already have a booking for TD #Course #WarnTiming #LongAvailability #EnrolledTo. Do you still want to enrol?\nCancel\nEnrol";
+        System.out.println(cataloguePage.enrolPopUpDialog.getText());
+        System.out.println("-----------");
+        System.out.println(expectedMessage);
 
-        editPage.settingsBtn.click();
-
-        BrowserUtils.scrollDownToElement(editPage.warningOfTimeCheckbox);
-//        editPage.warningOfTimeCheckbox.click();
-//        Assert.assertTrue(editPage.warningOfTimeCheckbox.getAttribute("class").endsWith("checked"));
-//        editPage.saveAndCloseBtn.click();
-        // TODO because it was not default unchecked status so If I execute these two line and save it
-        //  it will occur potential issue in previous tests, leave it like this until fixed it
-
-        Driver.getDriver().close();
-        Driver.getDriver().switchTo().window(originalWindow);
-        clientsPage.logOut();
     }
 }

@@ -23,9 +23,11 @@ public class Lmsils_46752_Steps {
 
     @Given("User login as {string} and {string}")
     public void userLoginAsAnd(String username, String password) {
-        Driver.getDriver().get(ConfigurationReader.getProperty("url"));
-
-        logInPage.logIn(username, password);
+        String internalDashboardUrl = ConfigurationReader.getProperty("internalDashboardUrl");
+        do {
+            Driver.getDriver().get(ConfigurationReader.getProperty("url"));
+            logInPage.logIn(username, password);
+        } while (!Driver.getDriver().getCurrentUrl().equals(internalDashboardUrl));
 
         internalDashboard.verifyPageLoaded();
     }
