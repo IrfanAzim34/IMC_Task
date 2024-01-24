@@ -62,4 +62,10 @@ public class CataloguePage extends InternalDashboardPage {
 
     @FindBy(xpath = "//button[@title='Cancel']")
     public WebElement enrolCancelBtn;
+
+    @FindBy(xpath = "//span[.='In progress']")
+    public WebElement inProgressLabel;
+
+    @FindBy(xpath = "//button[@title='Enrol']")
+    public WebElement enrolConfirmBtn;
 }
