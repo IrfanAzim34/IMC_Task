@@ -23,6 +23,11 @@ public class Lmsils_46752_Steps {
 
     @Given("User login as {string} and {string}")
     public void userLoginAsAnd(String username, String password) {
+
+        /**
+         * this do-while loop will check login the right page,sometime it will give systemError page or
+         * another login page(I don't know what is that page mean), mainly to avoid these two types problem
+         */
         String internalDashboardUrl = ConfigurationReader.getProperty("internalDashboardUrl");
         do {
             Driver.getDriver().get(ConfigurationReader.getProperty("url"));
